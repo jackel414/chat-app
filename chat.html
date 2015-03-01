@@ -28,6 +28,9 @@
       server.on('message', function(msg){
         $('#messages').append($('<li>').text(msg));
       });
+      server.on('new chatter', function(data) {
+        $('#messages').append($("<li class='new-user'>").text(data));
+      });
     </script>
   </body>
 </html>

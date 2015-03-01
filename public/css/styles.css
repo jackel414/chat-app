@@ -45,13 +45,13 @@ form button {
 	padding: 5px 10px;
 }
 
-#messages li:nth-child(odd) {
-	background: #eee;
-}
-
 #container {
 	width: 1000px;
 	text-align: left;
 	margin-right: auto;
 	margin-left: auto;
+}
+
+.new-user {
+	font-style: italic;
 }

@@ -14,7 +14,10 @@ io.on('connection', function(client){
   console.log('a user connected');
   client.on('join', function(name) {
   	client.nickname = name;
-  	console.log("Welcome: " + name);
+  	var newUserNotice = client.nickname + " has joined!";
+  	var welcomeNotice = "Welcome!"
+  	client.emit('new chatter', welcomeNotice);
+  	client.broadcast.emit('new chatter', newUserNotice);
   });
   client.on('message', function(data) {
   	var nickname = client.nickname;
