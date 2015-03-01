@@ -1,23 +1,28 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 console.log("Socket is ready...");
+app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(request, response){
-  response.sendfile('sample.html');
+app.get('/', function(request, response) {
+  response.sendfile('chat.html');
 });
 
-io.on('connection', function(socket){
-  //console.log('a user connected');
-  //socket.on('disconnect', function(){
-  	//console.log('user disconnected');
-  //});
-  socket.on('chat message', function(msg){
-  	io.emit('chat message', msg);
+io.on('connection', function(client){
+  console.log('a user connected');
+  client.on('join', function(name) {
+  	client.nickname = name;
+  	console.log("Welcome: " + name);
+  });
+  client.on('message', function(data) {
+  	var nickname = client.nickname;
+  	client.broadcast.emit('message', nickname + ': ' + data)
+  	client.emit('message', nickname + ': ' + data);
   });
 });
 
-http.listen(8080, function(){
+http.listen(8080, function() {
   console.log('listening on *:8080');
 });
